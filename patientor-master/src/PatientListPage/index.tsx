@@ -7,9 +7,14 @@ import AddPatientModal from "../AddPatientModal";
 import { Patient } from "../types";
 import { apiBaseUrl } from "../constants";
 import HealthRatingBar from "../components/HealthRatingBar";
-import { useStateValue } from "../state";
+import { useStateValue, addPatient } from "../state";
+
+import { useHistory } from "react-router-dom";
 
 const PatientListPage: React.FC = () => {
+
+  const history = useHistory();
+
   const [{ patients }, dispatch] = useStateValue();
 
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
@@ -28,7 +33,8 @@ const PatientListPage: React.FC = () => {
         `${apiBaseUrl}/patients`,
         values
       );
-      dispatch({ type: "ADD_PATIENT", payload: newPatient });
+      //dispatch({ type: "ADD_PATIENT", payload: newPatient });
+      dispatch(addPatient(newPatient));
       closeModal();
     } catch (e) {
       console.error(e.response.data);
@@ -53,7 +59,7 @@ const PatientListPage: React.FC = () => {
         <Table.Body>
           {Object.values(patients).map((patient: Patient) => (
             <Table.Row key={patient.id}>
-              <Table.Cell>{patient.name}</Table.Cell>
+              <Table.Cell onClick={() => history.push(`/patient/${patient.id}`)} style={{ cursor: 'pointer' }} >{patient.name}</Table.Cell>
               <Table.Cell>{patient.gender}</Table.Cell>
               <Table.Cell>{patient.occupation}</Table.Cell>
               <Table.Cell>
