@@ -43,7 +43,12 @@ const generateId = (patientsArray: Array<PatientEntry>): string => {
 
 const addEntry = (patientId: string, entry: NewEntry): Entry => {
     const newEntry = { ...entry, id: generateId(patients) };
-    patients.find(x => x.id === patientId)?.entries.concat(newEntry);
+    const patient = patients.find(x => x.id === patientId);
+    if (patient) {
+        patient.entries.push(newEntry);
+    } else {
+        throw new Error("undefined patient");
+    }
     return newEntry;
 };
 

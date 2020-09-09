@@ -31,6 +31,7 @@ const EntryComponent: React.FC<{ entry: Entry }> = ({ entry }) => {
                     <div><i style={{ color: 'gray' }}>{description}</i></div>
                     <ul>{diagnosisCodes?.map(x => <li key={id + x}>{x} {diagnoses[x] ? diagnoses[x].name : ""}</li>)}</ul>
                     <div>{"healthCheckRating" in entry ? <Icon name='heart' color={clr[entry.healthCheckRating]} /> : ""}</div>
+                    <div>Specialist: {entry.specialist}</div>
                 </Segment>
             );
         case "Hospital":
@@ -39,6 +40,9 @@ const EntryComponent: React.FC<{ entry: Entry }> = ({ entry }) => {
                     <div><b>{date}</b> <Icon name='hospital' size='big' /></div>
                     <div><i style={{ color: 'gray' }}>{description}</i></div>
                     <ul>{diagnosisCodes?.map(x => <li key={id + x}>{x} {diagnoses[x] ? diagnoses[x].name : ""}</li>)}</ul>
+                    <div>{"discharge" in entry ? "Discharge date: " + entry.discharge.date : ""}</div>
+                    <div>{"discharge" in entry ? "Discharge criteria: " + entry.discharge.criteria : ""}</div>
+                    <div>Specialist: {entry.specialist}</div>
                 </Segment>
             );
         case "OccupationalHealthcare":
@@ -47,6 +51,8 @@ const EntryComponent: React.FC<{ entry: Entry }> = ({ entry }) => {
                     <div><b>{date}</b> <Icon name='stethoscope' size='big' /><b>{"employerName" in entry ? entry.employerName : ""}</b></div>
                     <div><i style={{ color: 'gray' }}>{description}</i></div>
                     <ul>{diagnosisCodes?.map(x => <li key={id + x}>{x} {diagnoses[x] ? diagnoses[x].name : ""}</li>)}</ul>
+                    <div>{"sickLeave" in entry ? "Sick leave: " + entry.sickLeave?.startDate + " - " + entry.sickLeave?.endDate : ""}</div>
+                    <div>Specialist: {entry.specialist}</div>
                 </Segment>
             );
         default:

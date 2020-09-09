@@ -1,7 +1,14 @@
 import React from "react";
 import { ErrorMessage, Field, FieldProps, FormikProps } from "formik";
 import { Dropdown, DropdownProps, Form } from "semantic-ui-react";
-import { Diagnosis, Gender } from "../types";
+import { Diagnosis, Gender, EntryType } from "../types";
+
+export type TypeOption = {
+  value: EntryType;
+  label: string;
+};
+
+type option = GenderOption | TypeOption;
 
 // structure of a single option
 export type GenderOption = {
@@ -13,7 +20,7 @@ export type GenderOption = {
 type SelectFieldProps = {
   name: string;
   label: string;
-  options: GenderOption[];
+  options: option[];
 };
 
 export const SelectField: React.FC<SelectFieldProps> = ({
@@ -21,17 +28,17 @@ export const SelectField: React.FC<SelectFieldProps> = ({
   label,
   options
 }: SelectFieldProps) => (
-  <Form.Field>
-    <label>{label}</label>
-    <Field as="select" name={name} className="ui dropdown">
-      {options.map(option => (
-        <option key={option.value} value={option.value}>
-          {option.label || option.value}
-        </option>
-      ))}
-    </Field>
-  </Form.Field>
-);
+    <Form.Field>
+      <label>{label}</label>
+      <Field as="select" name={name} className="ui dropdown">
+        {options.map(option => (
+          <option key={option.value} value={option.value}>
+            {option.label || option.value}
+          </option>
+        ))}
+      </Field>
+    </Form.Field>
+  );
 
 interface TextProps extends FieldProps {
   label: string;
@@ -42,15 +49,17 @@ export const TextField: React.FC<TextProps> = ({
   field,
   label,
   placeholder
-}) => (
-  <Form.Field>
-    <label>{label}</label>
-    <Field placeholder={placeholder} {...field} />
-    <div style={{ color:'red' }}>
-      <ErrorMessage name={field.name} />
-    </div>
-  </Form.Field>
-);
+}) => {
+  return (
+    <Form.Field>
+      <label>{label}</label>
+      <Field placeholder={placeholder} {...field} />
+      <div style={{ color: 'red' }}>
+        <ErrorMessage name={field.name} />
+      </div>
+    </Form.Field>
+  );
+};
 
 /*
   for exercises 9.24.-
@@ -67,7 +76,7 @@ export const NumberField: React.FC<NumberProps> = ({ field, label, min, max }) =
     <label>{label}</label>
     <Field {...field} type='number' min={min} max={max} />
 
-    <div style={{ color:'red' }}>
+    <div style={{ color: 'red' }}>
       <ErrorMessage name={field.name} />
     </div>
   </Form.Field>

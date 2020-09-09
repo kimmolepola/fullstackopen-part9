@@ -9,8 +9,8 @@ router.post('/:id/entries', (req, res) => {
         const addedEntry = patientService.addEntry(req.params.id, newEntry);
         res.json(addedEntry);
     } catch (err) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        res.status(400).send(err.message);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
+        res.status(400).send({ error: err.message });
     }
 });
 
@@ -19,7 +19,7 @@ router.get('/:id', (req, res) => {
     if (patient) {
         res.send(patient);
     } else {
-        res.status(404).send("Not found");
+        res.status(404).send({ error: "Not found" });
     }
 });
 
@@ -29,8 +29,8 @@ router.post('/', (req, res) => {
         const addedPatientEntry = patientService.addPatientEntry(newPatientEntry);
         res.json(addedPatientEntry);
     } catch (err) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        res.status(400).send(err.message);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
+        res.status(400).send({ error: err.message });
     }
 });
 

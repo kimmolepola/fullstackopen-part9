@@ -1,19 +1,25 @@
+export enum EntryType {
+  HospitalEntry = "Hospital",
+  OccupationalHealthcareEntry = "OccupationalHealthcare",
+  HealthCheckEntry = "HealthCheck"
+}
+
 export type HealthCheckRatingColor = "green" | "yellow" | "red" | "black";
 
-interface OccupationalHealthcareEntry extends BaseEntry {
+export interface OccupationalHealthcareEntry extends BaseEntry {
   type: "OccupationalHealthcare";
   employerName: string;
   sickLeave?: { startDate: string; endDate: string };
 }
 
-interface HospitalEntry extends BaseEntry {
+export interface HospitalEntry extends BaseEntry {
   type: "Hospital";
   discharge: { date: string; criteria: string };
 }
 
 export type Entry = HospitalEntry | OccupationalHealthcareEntry | HealthCheckEntry;
 
-interface HealthCheckEntry extends BaseEntry {
+export interface HealthCheckEntry extends BaseEntry {
   type: "HealthCheck";
   healthCheckRating: HealthCheckRating;
 }
